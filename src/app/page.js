@@ -174,6 +174,13 @@ export default async function Home() {
             The game&apos;s numbers are scaled for play, but the ordering is real: the cheapest
             fixes come first, and they are usually the ones people skip.
           </p>
+
+          <Link
+            href="/learn"
+            className="mt-4 inline-block rounded-lg border border-neutral-700 px-4 py-2 text-sm font-semibold transition hover:border-neutral-500"
+          >
+            Read the full guides
+          </Link>
         </div>
       </section>
 

@@ -1,42 +1,42 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/session";
 import { getBonusState } from "@/lib/bonus";
+import { getPlayerStats, getPlayerRank } from "@/lib/stats";
+import { impactFromKwh } from "@/lib/leaderboard";
+import { SPONSORS } from "@/lib/sponsors";
+import { ARTICLES } from "@/lib/articles";
 import BonusCard from "@/app/components/BonusCard";
 
 export const dynamic = "force-dynamic";
 
 export const metadata = { title: "Your house · Eco-House" };
 
-const TIPS = [
-  {
-    title: "Kill standby draw",
-    body: "A TV, console, and charger left plugged in can cost more over a year than a month of cooking. A switched power strip solves most of it.",
-  },
-  {
-    title: "Wash cold",
-    body: "Around 90% of a washing machine's energy heats the water. Modern detergents work fine at 30°C.",
-  },
-  {
-    title: "Seal before you heat",
-    body: "Draught-proofing a door costs little and pays back faster than almost any appliance upgrade.",
-  },
-  {
-    title: "Shift the heavy loads",
-    body: "Running the dishwasher off-peak uses the same energy but a cleaner, cheaper slice of the grid.",
-  },
-];
-
-const SPONSORS = [
-  { name: "Smart power strips", blurb: "Cuts standby draw automatically." },
-  { name: "LED lighting", blurb: "80% less draw than halogen, same light." },
-  { name: "Home energy monitors", blurb: "See which appliance is the problem." },
-];
+function fmt(n, digits = 0) {
+  return n.toLocaleString("en-GB", { maximumFractionDigits: digits });
+}
 
 export default async function DashboardPage() {
   const session = await getSession();
   if (!session) redirect("/login");
 
-  const bonus = await getBonusState(session.username);
+  const [bonus, stats, rank] = await Promise.all([
+    getBonusState(session.username),
+    getPlayerStats(session.username),
+    getPlayerRank(session.username),
+  ]);
+
+  const impact = impactFromKwh(stats.kwhSaved);
+  const neverSynced = !stats.lastSync;
+
+  const STATS = [
+    { label: "Energy saved", value: `${fmt(stats.kwhSaved)} kWh` },
+    { label: "Coins", value: fmt(stats.coins) },
+    { label: "Leaderboard rank", value: rank ? `#${rank}` : "—" },
+    { label: "Upgrades owned", value: fmt(stats.upgradesOwned) },
+    { label: "Houses completed", value: fmt(stats.housesCompleted) },
+    { label: "Current tier", value: stats.tier },
+  ];
 
   return (
     <main className="flex-1 px-6 py-12">
@@ -45,53 +45,100 @@ export default async function DashboardPage() {
           Welcome back, {session.username}
         </h1>
         <p className="mt-2 text-neutral-400">
-          Your account is live. Game stats appear here once the Unity build starts syncing.
+          Your progress, your rewards, and a few ways to save outside the game.
         </p>
 
-        <div className="mt-8">
-          <BonusCard streak={bonus.streak} claimedToday={bonus.claimedToday} />
-        </div>
+        {/* In-game stats */}
+        <section className="mt-8">
+          <div className="flex items-baseline justify-between">
+            <h2 className="font-semibold">Your stats</h2>
+            <span className="text-xs text-neutral-500">
+              {neverSynced
+                ? "Not synced yet"
+                : `Last sync ${new Date(stats.lastSync).toLocaleDateString("en-GB")}`}
+            </span>
+          </div>
 
-        {/* Eco tips */}
-        <section className="mt-10">
-          <h2 className="font-semibold">Save more, outside the game</h2>
-          <p className="mt-1 text-sm text-neutral-400">
-            The same upgrades, in the house you actually live in.
-          </p>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            {TIPS.map((t) => (
-              <div key={t.title} className="rounded-xl border border-neutral-800 bg-neutral-900/30 p-4">
-                <p className="font-medium text-emerald-400">{t.title}</p>
-                <p className="mt-1.5 text-sm leading-relaxed text-neutral-400">{t.body}</p>
+          {neverSynced && (
+            <p className="mt-3 rounded-lg border border-neutral-800 bg-neutral-900/50 px-4 py-3 text-sm text-neutral-400">
+              Nothing here yet. Stats fill in once the game syncs your save — coins you claim
+              below are stored and applied then.
+            </p>
+          )}
+
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {STATS.map((s) => (
+              <div key={s.label} className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-4">
+                <p className="text-xs uppercase tracking-wider text-neutral-500">{s.label}</p>
+                <p className="mt-1 text-xl font-bold text-emerald-400">{s.value}</p>
               </div>
             ))}
           </div>
+
+          {stats.kwhSaved > 0 && (
+            <p className="mt-3 text-sm text-neutral-400">
+              That is roughly <span className="text-neutral-200">{fmt(impact.co2Kg)} kg</span> of
+              CO₂ avoided — about {fmt(impact.trees, 1)} trees working for a year.
+            </p>
+          )}
+        </section>
+
+        {/* Daily coins */}
+        <section className="mt-10">
+          <BonusCard streak={bonus.streak} claimedToday={bonus.claimedToday} />
         </section>
 
         {/* Sponsors */}
         <section className="mt-10">
-          <h2 className="font-semibold">Energy-saving products</h2>
+          <h2 className="font-semibold">Products that cut real bills</h2>
           <p className="mt-1 text-sm text-neutral-400">
-            Partner slots. Nothing is linked yet — these are placeholders.
+            The real-world versions of the upgrades in the game.
           </p>
-          <div className="mt-4 space-y-2">
+
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {SPONSORS.map((s) => (
-              <div
-                key={s.name}
-                className="flex items-center justify-between rounded-xl border border-dashed border-neutral-800 p-4"
-              >
-                <div>
+              <div key={s.name} className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-4">
+                <div className="flex items-start justify-between gap-3">
                   <p className="font-medium">{s.name}</p>
-                  <p className="text-sm text-neutral-500">{s.blurb}</p>
+                  <span className="shrink-0 rounded bg-neutral-800 px-2 py-0.5 text-xs text-neutral-400">
+                    {s.category}
+                  </span>
                 </div>
-                <span className="text-xs text-neutral-600">Slot open</span>
+                <p className="mt-1.5 text-sm leading-relaxed text-neutral-400">{s.blurb}</p>
+                <p className="mt-2 text-xs text-emerald-400">{s.saving}</p>
               </div>
             ))}
           </div>
+
           <p className="mt-3 text-xs text-neutral-500">
-            When partners are added, links here may earn a commission. That will be disclosed
-            on the link itself.
+            Listed as examples of what works. Eco-House is not affiliated with any of these
+            brands and earns nothing from them. If that changes, it will say so here.
           </p>
+        </section>
+
+        {/* Learn */}
+        <section className="mt-10">
+          <div className="flex items-baseline justify-between">
+            <h2 className="font-semibold">Read up</h2>
+            <Link href="/learn" className="text-sm text-emerald-400 hover:underline">
+              All articles
+            </Link>
+          </div>
+          <div className="mt-4 space-y-2">
+            {ARTICLES.slice(0, 3).map((a) => (
+              <Link
+                key={a.slug}
+                href={`/learn/${a.slug}`}
+                className="block rounded-xl border border-neutral-800 bg-neutral-900/50 p-4 transition hover:border-neutral-600"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <p className="font-medium">{a.title}</p>
+                  <span className="shrink-0 text-xs text-neutral-500">{a.readTime}</span>
+                </div>
+                <p className="mt-1 text-sm text-neutral-400">{a.summary}</p>
+              </Link>
+            ))}
+          </div>
         </section>
       </div>
     </main>

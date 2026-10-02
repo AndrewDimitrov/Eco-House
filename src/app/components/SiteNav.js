@@ -16,8 +16,8 @@ export default async function SiteNav() {
             <Link href="/#leaderboard" className="transition hover:text-neutral-100">
               Leaderboard
             </Link>
-            <Link href="/#about" className="transition hover:text-neutral-100">
-              About
+            <Link href="/learn" className="transition hover:text-neutral-100">
+              Learn
             </Link>
             <Link href="/#download" className="transition hover:text-neutral-100">
               Download

@@ -9,8 +9,8 @@ export default function SiteFooter() {
           <Link href="/#leaderboard" className="transition hover:text-neutral-300">
             Leaderboard
           </Link>
-          <Link href="/#about" className="transition hover:text-neutral-300">
-            About
+          <Link href="/learn" className="transition hover:text-neutral-300">
+            Learn
           </Link>
           <Link href="/#download" className="transition hover:text-neutral-300">
             Download
