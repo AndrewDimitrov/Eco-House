@@ -1,10 +1,6 @@
 import Link from "next/link";
-import { getSession } from "@/lib/session";
-import { logOutAction } from "@/app/actions/auth";
 
-export default async function SiteNav() {
-  const session = await getSession();
-
+export default function SiteNav() {
   return (
     <header className="border-b border-neutral-800">
       <nav className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-6 py-4">
@@ -22,40 +18,19 @@ export default async function SiteNav() {
             <Link href="/#download" className="transition hover:text-neutral-100">
               Download
             </Link>
-            {session && (
-              <Link href="/dashboard" className="transition hover:text-neutral-100">
-                Your house
-              </Link>
-            )}
           </div>
         </div>
 
         <div className="flex items-center gap-3 text-sm">
-          {session ? (
-            <>
-              <span className="hidden text-neutral-400 sm:inline">{session.username}</span>
-              <form action={logOutAction}>
-                <button
-                  type="submit"
-                  className="rounded-lg border border-neutral-700 px-3 py-1.5 transition hover:border-neutral-500"
-                >
-                  Log out
-                </button>
-              </form>
-            </>
-          ) : (
-            <>
-              <Link href="/login" className="text-neutral-400 transition hover:text-neutral-100">
-                Log in
-              </Link>
-              <Link
-                href="/signup"
-                className="rounded-lg bg-emerald-500 px-3 py-1.5 font-semibold text-neutral-950 transition hover:bg-emerald-400"
-              >
-                Sign up
-              </Link>
-            </>
-          )}
+          <Link href="/login" className="text-neutral-400 transition hover:text-neutral-100">
+            Log in
+          </Link>
+          <Link
+            href="/signup"
+            className="rounded-lg bg-emerald-500 px-3 py-1.5 font-semibold text-neutral-950 transition hover:bg-emerald-400"
+          >
+            Sign up
+          </Link>
         </div>
       </nav>
     </header>
