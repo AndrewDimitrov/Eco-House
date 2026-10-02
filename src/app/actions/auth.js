@@ -17,7 +17,7 @@ export async function signUpAction(_prev, formData) {
   if (result.error) return { error: result.error };
 
   await setSession(result.username);
-  redirect("/");
+  redirect("/dashboard");
 }
 
 export async function logInAction(_prev, formData) {
@@ -32,7 +32,7 @@ export async function logInAction(_prev, formData) {
   if (result.error) return { error: result.error };
 
   await setSession(result.username);
-  redirect("/");
+  redirect("/dashboard");
 }
 
 export async function logOutAction() {
