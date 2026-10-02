@@ -13,11 +13,14 @@ export default async function SiteNav() {
             Eco<span className="text-emerald-400">House</span>
           </Link>
           <div className="flex items-center gap-4 text-sm text-neutral-400">
-            <Link href="/download" className="transition hover:text-neutral-100">
-              Download
-            </Link>
-            <Link href="/leaderboard" className="transition hover:text-neutral-100">
+            <Link href="/#leaderboard" className="transition hover:text-neutral-100">
               Leaderboard
+            </Link>
+            <Link href="/#about" className="transition hover:text-neutral-100">
+              About
+            </Link>
+            <Link href="/#download" className="transition hover:text-neutral-100">
+              Download
             </Link>
             {session && (
               <Link href="/dashboard" className="transition hover:text-neutral-100">
