@@ -7,17 +7,30 @@ export default async function SiteNav() {
 
   return (
     <header className="border-b border-neutral-800">
-      <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-        <Link href="/" className="font-bold tracking-tight">
-          Eco<span className="text-emerald-400">House</span>
-        </Link>
+      <nav className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-6 py-4">
+        <div className="flex items-center gap-6">
+          <Link href="/" className="font-bold tracking-tight">
+            Eco<span className="text-emerald-400">House</span>
+          </Link>
+          <div className="flex items-center gap-4 text-sm text-neutral-400">
+            <Link href="/download" className="transition hover:text-neutral-100">
+              Download
+            </Link>
+            <Link href="/leaderboard" className="transition hover:text-neutral-100">
+              Leaderboard
+            </Link>
+            {session && (
+              <Link href="/dashboard" className="transition hover:text-neutral-100">
+                Your house
+              </Link>
+            )}
+          </div>
+        </div>
 
-        <div className="flex items-center gap-4 text-sm">
+        <div className="flex items-center gap-3 text-sm">
           {session ? (
             <>
-              <span className="text-neutral-400">
-                Signed in as <span className="text-neutral-200">{session.username}</span>
-              </span>
+              <span className="hidden text-neutral-400 sm:inline">{session.username}</span>
               <form action={logOutAction}>
                 <button
                   type="submit"
