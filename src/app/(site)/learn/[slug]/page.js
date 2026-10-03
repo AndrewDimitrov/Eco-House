@@ -56,14 +56,14 @@ export default async function ArticlePage({ params }) {
             Guide {String(index + 1).padStart(2, "0")} · {article.readTime} read
           </p>
 
-          <h1 className="mt-4 text-[38px] font-semibold leading-[1.02] tracking-[-.03em] text-ink sm:text-[54px]">
+          <h1 className="mt-4 text-[34px] font-semibold leading-[1.02] tracking-[-.03em] text-ink sm:text-[48px]">
             {article.title}
           </h1>
           <p className="mt-5 text-xl leading-relaxed text-ink-soft">{article.summary}</p>
         </div>
       </header>
 
-      <article className="mx-auto max-w-[760px] px-5 py-14 sm:px-8 sm:py-20">
+      <article className="mx-auto max-w-[760px] px-5 py-16 sm:px-8 sm:py-20">
         <div className="space-y-6 text-[18px] leading-[1.75] text-ink/90">
           {article.sections.map((s) => (
             <section key={s.heading}>

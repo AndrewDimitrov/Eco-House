@@ -8,7 +8,7 @@ export default function GuidesStrip() {
   return (
     <section
       id="guides"
-      className="relative pt-24 pb-24 sm:pt-28 sm:pb-32"
+      className="relative py-24 sm:py-32"
       aria-labelledby="guides-title"
     >
       <div className="mx-auto max-w-[1320px] px-5 sm:px-8">

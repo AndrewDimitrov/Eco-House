@@ -5,6 +5,7 @@ import { getPlayerStats, getPlayerRank } from "@/lib/stats";
 import { getTotalSaved } from "@/lib/leaderboard";
 import { ARTICLES } from "@/lib/articles";
 import { ECO_POINTS_PER_POST } from "@/lib/claims";
+import { logOutAction } from "@/app/actions/auth";
 import SponsorRow from "@/app/components/dashboard/SponsorRow";
 import ProgressStats from "@/app/components/dashboard/ProgressStats";
 import PlayPrompt from "@/app/components/dashboard/PlayPrompt";
@@ -30,12 +31,25 @@ export default async function DashboardPage() {
   const hasPlayed = Boolean(stats.lastSync);
 
   return (
-    <main className="mx-auto max-w-[1320px] space-y-16 px-5 py-12 sm:px-8 sm:py-16">
-      <header>
-        <p className="font-mono text-[11px] uppercase tracking-[.18em] text-ink-soft">Dashboard</p>
-        <h1 className="mt-3 text-[34px] font-semibold leading-tight tracking-[-.03em] text-ink sm:text-[44px]">
-          Hi, {session.username}.
-        </h1>
+    <main className="mx-auto max-w-[1320px] space-y-16 px-5 py-16 sm:px-8 sm:py-20">
+      <header className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="font-mono text-[13px] uppercase tracking-[.18em] text-ink-soft">
+            Dashboard
+          </p>
+          <h1 className="mt-3 text-[34px] font-semibold leading-[1.02] tracking-[-.03em] text-ink sm:text-[48px]">
+            Hi, {session.username}.
+          </h1>
+        </div>
+
+        <form action={logOutAction}>
+          <button
+            type="submit"
+            className="rounded-lg border border-line px-4 py-2.5 text-[15px] font-medium text-ink-soft transition-colors hover:border-ink-soft hover:text-ink"
+          >
+            Log out
+          </button>
+        </form>
       </header>
 
       <SponsorRow />

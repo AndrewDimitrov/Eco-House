@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getSession } from "@/lib/session";
 
 // Only routes that exist — a footer full of dead links is worse than a short one.
 const COLUMNS = [
@@ -16,17 +17,22 @@ const COLUMNS = [
       ["/learn", "All guides"],
     ],
   },
-  {
-    title: "Account",
-    links: [
-      ["/signup", "Sign up"],
-      ["/login", "Log in"],
-      ["/dashboard", "Dashboard"],
-    ],
-  },
 ];
 
-export default function SiteFooter() {
+const ACCOUNT_OUT = [
+  ["/signup", "Sign up"],
+  ["/login", "Log in"],
+];
+
+const ACCOUNT_IN = [["/dashboard", "Dashboard"]];
+
+export default async function SiteFooter() {
+  const session = await getSession();
+  const columns = [
+    ...COLUMNS,
+    { title: "Account", links: session ? ACCOUNT_IN : ACCOUNT_OUT },
+  ];
+
   return (
     <footer className="relative border-t border-line bg-band">
       <div className="mx-auto grid max-w-[1320px] gap-12 px-5 pt-16 pb-10 sm:px-8 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
@@ -46,7 +52,7 @@ export default function SiteFooter() {
           </p>
         </div>
 
-        {COLUMNS.map((col) => (
+        {columns.map((col) => (
           <nav key={col.title} aria-label={col.title}>
             <p className="font-mono text-[13px] uppercase tracking-[.16em] text-ink">
               {col.title}

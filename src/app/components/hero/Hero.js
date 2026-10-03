@@ -50,7 +50,7 @@ export default function Hero() {
 
       <Landscape />
 
-      <div className="relative mx-auto grid w-full max-w-[1480px] flex-1 items-center gap-8 px-4 pt-24 pb-32 sm:gap-10 sm:px-6 sm:pb-40 lg:grid-cols-[1fr_1.25fr] lg:gap-6 lg:px-8 lg:pt-20 lg:pb-48">
+      <div className="relative mx-auto grid w-full max-w-[1320px] flex-1 items-center gap-8 px-5 pt-24 pb-32 sm:gap-10 sm:px-8 sm:pb-40 lg:grid-cols-[1fr_1.25fr] lg:gap-6 lg:pt-20 lg:pb-48">
         {/* relative + z-10 so the headline can run past its column into the
             TV column's empty left edge without the grid resizing. */}
         <div className="relative z-10 max-w-[640px]">

@@ -14,7 +14,7 @@ export default function LearnPage() {
   return (
     <main className="flex-1">
       <SiteNav />
-      <section className="pt-20 pb-24 sm:pt-24 sm:pb-32">
+      <section className="py-24 sm:py-32">
         <div className="mx-auto max-w-[1320px] px-5 sm:px-8">
           <Kicker>Guides</Kicker>
           <h1 className="mt-5 max-w-[18ch] text-[34px] font-semibold leading-[1.02] tracking-[-.03em] text-ink sm:text-[48px]">
