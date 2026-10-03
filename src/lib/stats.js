@@ -5,6 +5,7 @@ import { getDb } from "@/lib/mongodb";
 const EMPTY = {
   kwhSaved: 0,
   coins: 0,
+  ecoPoints: 0,
   housesCompleted: 0,
   upgradesOwned: 0,
   tier: "Starter",
@@ -31,6 +32,27 @@ export async function getPlayerRank(username) {
     .countDocuments({ kwhSaved: { $gt: me.kwhSaved } });
 
   return ahead + 1;
+}
+
+// One atomic update so a sync can't interleave with a website reward and lose
+// one of the two writes.
+export async function applySync(username, { increments, maximums }) {
+  const db = await getDb();
+  const update = {
+    $setOnInsert: { username },
+    $set: { lastSync: new Date() },
+  };
+
+  if (Object.keys(increments).length) update.$inc = increments;
+  if (Object.keys(maximums).length) update.$max = maximums;
+
+  const doc = await db.collection("stats").findOneAndUpdate({ username }, update, {
+    upsert: true,
+    returnDocument: "after",
+    projection: { _id: 0, username: 0 },
+  });
+
+  return { ...EMPTY, ...doc };
 }
 
 export async function addCoins(username, amount, reason) {
