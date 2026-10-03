@@ -43,18 +43,18 @@ export default async function DashboardPage() {
   return (
     <main className="flex-1">
       {/* Banner — the only thing at the top, links out to the public site */}
-      <div className="border-b border-neutral-800 bg-emerald-950/30">
+      <div className="border-b border-line bg-brand/5">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-6 py-3 text-sm">
-          <p className="text-neutral-300">
+          <p className="text-ink-soft">
             Want to cut your real bill?{" "}
-            <Link href="/learn" className="font-medium text-emerald-400 hover:underline">
+            <Link href="/learn" className="font-medium text-brand hover:underline">
               Read the energy guides →
             </Link>
           </p>
           <form action={logOutAction}>
             <button
               type="submit"
-              className="text-neutral-500 transition hover:text-neutral-300"
+              className="text-ink-soft transition hover:text-ink-soft"
             >
               Log out
             </button>
@@ -66,7 +66,7 @@ export default async function DashboardPage() {
         <h1 className="text-3xl font-bold tracking-tight">
           Welcome back, {session.username}
         </h1>
-        <p className="mt-1.5 text-neutral-400">
+        <p className="mt-1.5 text-ink-soft">
           {neverSynced
             ? "Your stats fill in once the game syncs your save."
             : `Last synced ${new Date(stats.lastSync).toLocaleDateString("en-GB")}.`}
@@ -77,18 +77,18 @@ export default async function DashboardPage() {
           {STATS.map((s) => (
             <div
               key={s.label}
-              className="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-5"
+              className="rounded-2xl border border-line bg-paper p-5"
             >
-              <p className="text-xs uppercase tracking-wider text-neutral-500">{s.label}</p>
-              <p className="mt-2 text-3xl font-bold text-emerald-400">{s.value}</p>
-              {s.unit && <p className="mt-0.5 text-xs text-neutral-500">{s.unit}</p>}
+              <p className="text-xs uppercase tracking-wider text-ink-soft">{s.label}</p>
+              <p className="mt-2 text-3xl font-bold text-brand">{s.value}</p>
+              {s.unit && <p className="mt-0.5 text-xs text-ink-soft">{s.unit}</p>}
             </div>
           ))}
         </section>
 
         {stats.kwhSaved > 0 && (
-          <p className="mt-4 text-sm text-neutral-400">
-            That is roughly <span className="text-neutral-200">{fmt(impact.co2Kg)} kg</span> of
+          <p className="mt-4 text-sm text-ink-soft">
+            That is roughly <span className="text-ink">{fmt(impact.co2Kg)} kg</span> of
             CO₂ avoided — about {fmt(impact.trees, 1)} trees working for a year.
           </p>
         )}
@@ -101,7 +101,7 @@ export default async function DashboardPage() {
         {/* Promo cards */}
         <section className="mt-12">
           <h2 className="text-xl font-bold tracking-tight">Cut your real bill</h2>
-          <p className="mt-1 text-sm text-neutral-400">
+          <p className="mt-1 text-sm text-ink-soft">
             The real-world versions of the upgrades in the game.
           </p>
 
@@ -109,23 +109,23 @@ export default async function DashboardPage() {
             {SPONSORS.map((s) => (
               <div
                 key={s.name}
-                className="flex flex-col rounded-2xl border border-neutral-800 bg-neutral-900/50 p-5 transition hover:border-neutral-600"
+                className="flex flex-col rounded-2xl border border-line bg-paper p-5 transition hover:border-line"
               >
-                <span className="self-start rounded-full bg-neutral-800 px-2.5 py-1 text-xs text-neutral-400">
+                <span className="self-start rounded-full bg-line px-2.5 py-1 text-xs text-ink-soft">
                   {s.category}
                 </span>
                 <p className="mt-3 font-semibold">{s.name}</p>
-                <p className="mt-1.5 flex-1 text-sm leading-relaxed text-neutral-400">
+                <p className="mt-1.5 flex-1 text-sm leading-relaxed text-ink-soft">
                   {s.blurb}
                 </p>
-                <p className="mt-4 border-t border-neutral-800 pt-3 text-sm font-medium text-emerald-400">
+                <p className="mt-4 border-t border-line pt-3 text-sm font-medium text-brand">
                   {s.saving}
                 </p>
               </div>
             ))}
           </div>
 
-          <p className="mt-4 text-xs text-neutral-500">
+          <p className="mt-4 text-xs text-ink-soft">
             Listed as examples of what works. Eco-House is not affiliated with these brands and
             earns nothing from them. If that changes, it will say so here.
           </p>
@@ -135,7 +135,7 @@ export default async function DashboardPage() {
         <section className="mt-12">
           <div className="flex items-baseline justify-between">
             <h2 className="text-xl font-bold tracking-tight">Read up</h2>
-            <Link href="/learn" className="text-sm text-emerald-400 hover:underline">
+            <Link href="/learn" className="text-sm text-brand hover:underline">
               All articles
             </Link>
           </div>
@@ -145,14 +145,14 @@ export default async function DashboardPage() {
               <Link
                 key={a.slug}
                 href={`/learn/${a.slug}`}
-                className="flex flex-col rounded-2xl border border-neutral-800 bg-neutral-900/50 p-5 transition hover:border-neutral-600"
+                className="flex flex-col rounded-2xl border border-line bg-paper p-5 transition hover:border-line"
               >
                 <div className="flex items-start justify-between gap-3">
                   <p className="font-semibold">{a.title}</p>
-                  <span className="shrink-0 text-xs text-neutral-500">{a.readTime}</span>
+                  <span className="shrink-0 text-xs text-ink-soft">{a.readTime}</span>
                 </div>
-                <p className="mt-2 text-sm leading-relaxed text-neutral-400">{a.summary}</p>
-                <span className="mt-4 text-sm font-medium text-emerald-400">Read →</span>
+                <p className="mt-2 text-sm leading-relaxed text-ink-soft">{a.summary}</p>
+                <span className="mt-4 text-sm font-medium text-brand">Read →</span>
               </Link>
             ))}
           </div>

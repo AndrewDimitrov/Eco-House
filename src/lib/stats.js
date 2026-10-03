@@ -24,14 +24,36 @@ export async function getPlayerStats(username) {
 
 export async function getPlayerRank(username) {
   const db = await getDb();
-  const me = await db.collection("savings").findOne({ username });
-  if (!me) return null;
+  const me = await db.collection("stats").findOne({ username });
+  if (!me?.kwhSaved) return null;
 
   const ahead = await db
-    .collection("savings")
+    .collection("stats")
     .countDocuments({ kwhSaved: { $gt: me.kwhSaved } });
 
   return ahead + 1;
+}
+
+// Starting over clears the run — balances and the house. Lifetime totals stay:
+// kwhSaved is what the leaderboard ranks, and it's a record of energy the player
+// really did save, not a score to be taken back.
+export async function resetPlayerStats(username) {
+  const db = await getDb();
+  const doc = await db.collection("stats").findOneAndUpdate(
+    { username },
+    {
+      $set: {
+        coins: 0,
+        ecoPoints: 0,
+        upgradesOwned: 0,
+        lastReset: new Date(),
+      },
+      $setOnInsert: { username },
+    },
+    { upsert: true, returnDocument: "after", projection: { _id: 0, username: 0 } },
+  );
+
+  return { ...EMPTY, ...doc };
 }
 
 // One atomic update so a sync can't interleave with a website reward and lose

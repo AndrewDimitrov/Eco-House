@@ -2,6 +2,7 @@
 export const ARTICLES = [
   {
     slug: "standby-power",
+    icon: "plug",
     title: "The power you pay for and never use",
     summary:
       "Devices that look off are rarely off. Standby draw is the cheapest waste to eliminate and the easiest to forget.",
@@ -24,6 +25,7 @@ export const ARTICLES = [
   },
   {
     slug: "lighting",
+    icon: "bulb",
     title: "Lighting: the upgrade that pays for itself twice",
     summary:
       "LEDs use about a fifth of the energy of halogen for the same light, and last roughly fifteen times as long.",
@@ -46,6 +48,7 @@ export const ARTICLES = [
   },
   {
     slug: "heating-and-insulation",
+    icon: "house",
     title: "Seal the house before you heat it",
     summary:
       "Heating is the largest single draw in most homes. Insulation decides how much of it you keep.",
@@ -68,9 +71,10 @@ export const ARTICLES = [
   },
   {
     slug: "appliances",
+    icon: "fridge",
     title: "Which appliances actually matter",
     summary:
-      "A handful of machines dominate the bill. The rest are rounding errors worth ignoring.",
+      "A handful of machines dominate the bill. Knowing which ones tells you where replacing is worth the money.",
     readTime: "3 min",
     sections: [
       {

@@ -18,14 +18,14 @@ function PasswordField({ id, label, autoComplete, hint }) {
           type={visible ? "text" : "password"}
           autoComplete={autoComplete}
           required
-          className="w-full rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 pr-11 outline-none focus:border-neutral-500"
+          className="w-full rounded-lg border border-line bg-paper px-3 py-2 pr-11 outline-none focus:border-ink-soft"
         />
         <button
           type="button"
           onClick={() => setVisible((v) => !v)}
           aria-label={visible ? "Hide password" : "Show password"}
           aria-pressed={visible}
-          className="absolute inset-y-0 right-0 grid w-11 place-items-center text-neutral-500 transition hover:text-neutral-200"
+          className="absolute inset-y-0 right-0 grid w-11 place-items-center text-ink-soft transition hover:text-ink"
         >
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
             <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
@@ -34,7 +34,7 @@ function PasswordField({ id, label, autoComplete, hint }) {
           </svg>
         </button>
       </div>
-      {hint && <p className="mt-1.5 text-xs text-neutral-500">{hint}</p>}
+      {hint && <p className="mt-1.5 text-xs text-ink-soft">{hint}</p>}
     </div>
   );
 }
@@ -48,7 +48,7 @@ export default function AuthForm({ mode, action }) {
       <h1 className="text-2xl font-bold tracking-tight">
         {isSignUp ? "Create an account" : "Log in"}
       </h1>
-      <p className="mt-2 text-sm text-neutral-400">
+      <p className="mt-2 text-sm text-ink-soft">
         {isSignUp
           ? "Pick a username — it's the name shown on the leaderboard."
           : "Welcome back to Eco-House."}
@@ -57,7 +57,7 @@ export default function AuthForm({ mode, action }) {
       {state?.error && (
         <p
           role="alert"
-          className="mt-5 rounded-lg border border-red-900 bg-red-950/50 px-3 py-2 text-sm text-red-300"
+          className="mt-5 rounded-lg border border-red-300 bg-red-50/50 px-3 py-2 text-sm text-red-700"
         >
           {state.error}
         </p>
@@ -74,10 +74,10 @@ export default function AuthForm({ mode, action }) {
             autoComplete="username"
             required
             maxLength={20}
-            className="mt-1.5 w-full rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 outline-none focus:border-neutral-500"
+            className="mt-1.5 w-full rounded-lg border border-line bg-paper px-3 py-2 outline-none focus:border-ink-soft"
           />
           {isSignUp && (
-            <p className="mt-1.5 text-xs text-neutral-500">
+            <p className="mt-1.5 text-xs text-ink-soft">
               3–20 characters. Letters, numbers, and underscores.
             </p>
           )}
@@ -102,16 +102,16 @@ export default function AuthForm({ mode, action }) {
       <button
         type="submit"
         disabled={pending}
-        className="mt-6 w-full rounded-lg bg-emerald-500 px-4 py-2.5 font-semibold text-neutral-950 transition hover:bg-emerald-400 disabled:opacity-60"
+        className="mt-6 w-full rounded-lg bg-ink px-4 py-2.5 font-semibold text-paper transition hover:bg-ink/85 disabled:opacity-60"
       >
         {pending ? "Please wait…" : isSignUp ? "Create account" : "Log in"}
       </button>
 
-      <p className="mt-5 text-center text-sm text-neutral-400">
+      <p className="mt-5 text-center text-sm text-ink-soft">
         {isSignUp ? "Already have an account? " : "No account yet? "}
         <Link
           href={isSignUp ? "/login" : "/signup"}
-          className="font-medium text-emerald-400 hover:underline"
+          className="font-medium text-brand hover:underline"
         >
           {isSignUp ? "Log in" : "Sign up"}
         </Link>

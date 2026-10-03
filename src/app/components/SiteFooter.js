@@ -1,21 +1,72 @@
 import Link from "next/link";
 
+// Only routes that exist — a footer full of dead links is worse than a short one.
+const COLUMNS = [
+  {
+    title: "Game",
+    links: [
+      ["/#download", "Download"],
+      ["/#leaderboard", "Leaderboard"],
+    ],
+  },
+  {
+    title: "Learn",
+    links: [
+      ["/#learn", "Where the energy goes"],
+      ["/learn", "All guides"],
+    ],
+  },
+  {
+    title: "Account",
+    links: [
+      ["/signup", "Sign up"],
+      ["/login", "Log in"],
+      ["/dashboard", "Dashboard"],
+    ],
+  },
+];
+
 export default function SiteFooter() {
   return (
-    <footer className="mt-auto border-t border-neutral-800">
-      <div className="mx-auto flex max-w-5xl flex-col gap-3 px-6 py-6 text-sm text-neutral-500 sm:flex-row sm:items-center sm:justify-between">
-        <p>© {new Date().getFullYear()} Eco-House</p>
-        <div className="flex gap-5">
-          <Link href="/#leaderboard" className="transition hover:text-neutral-300">
-            Leaderboard
+    <footer className="relative border-t border-line bg-band">
+      <div className="mx-auto grid max-w-[1320px] gap-12 px-5 pt-16 pb-10 sm:px-8 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
+        <div>
+          <Link href="/" aria-label="Eco-House home">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo/ecohouse-logo.svg"
+              alt="Eco-House"
+              className="h-9 w-auto"
+              style={{ imageRendering: "pixelated" }}
+            />
           </Link>
-          <Link href="/learn" className="transition hover:text-neutral-300">
-            Learn
-          </Link>
-          <Link href="/#download" className="transition hover:text-neutral-300">
-            Download
-          </Link>
+          <p className="mt-5 max-w-[34ch] text-[15px] leading-relaxed text-ink-soft">
+            An idle game about cutting a home&apos;s energy bill to nothing, and a few honest
+            guides to doing it for real.
+          </p>
         </div>
+
+        {COLUMNS.map((col) => (
+          <nav key={col.title} aria-label={col.title}>
+            <p className="font-mono text-[11px] uppercase tracking-[.16em] text-ink">
+              {col.title}
+            </p>
+            <ul className="mt-4 space-y-2.5 text-[15px]">
+              {col.links.map(([href, label]) => (
+                <li key={href}>
+                  <Link href={href} className="text-ink-soft transition-colors hover:text-ink">
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))}
+      </div>
+
+      <div className="mx-auto flex max-w-[1320px] flex-col justify-between gap-3 border-t border-line px-5 py-6 font-mono text-xs text-ink-soft sm:flex-row sm:px-8">
+        <span>© {new Date().getFullYear()} Eco-House</span>
+        <span>Built in Unity · In-game figures are scaled for play</span>
       </div>
     </footer>
   );

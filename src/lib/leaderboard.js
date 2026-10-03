@@ -17,9 +17,11 @@ export function impactFromKwh(kwh) {
 
 export async function getTopSavers(limit = 20) {
   const db = await getDb();
+  // Players who have never synced have no kwhSaved; they don't belong on a
+  // board ranked by it.
   const docs = await db
-    .collection("savings")
-    .find({}, { projection: { _id: 0 } })
+    .collection("stats")
+    .find({ kwhSaved: { $gt: 0 } }, { projection: { _id: 0 } })
     .sort({ kwhSaved: -1 })
     .limit(limit)
     .toArray();
@@ -27,10 +29,39 @@ export async function getTopSavers(limit = 20) {
   return docs.map((doc, i) => ({ ...doc, rank: i + 1 }));
 }
 
+// One call for the landing page, returning which of the three states to render
+// so the section never has to guess from empty arrays.
+export async function getLeaderboard(limit = 10) {
+  try {
+    const [entries, totals] = await Promise.all([getTopSavers(limit), getTotalSaved()]);
+    const impact = impactFromKwh(totals.total);
+    const stats = {
+      totalKwh: Math.round(totals.total),
+      co2Kg: Math.round(impact.co2Kg),
+      trees: Math.round(impact.trees),
+    };
+
+    if (!entries.length) return { status: "empty", stats };
+
+    return {
+      status: "ok",
+      stats,
+      entries: entries.map((e) => ({
+        rank: e.rank,
+        username: e.username,
+        kwhSaved: Math.round(e.kwhSaved),
+        co2Kg: Math.round(impactFromKwh(e.kwhSaved).co2Kg),
+      })),
+    };
+  } catch {
+    return { status: "error" };
+  }
+}
+
 export async function getTotalSaved() {
   const db = await getDb();
   const [result] = await db
-    .collection("savings")
+    .collection("stats")
     .aggregate([{ $group: { _id: null, total: { $sum: "$kwhSaved" }, players: { $sum: 1 } } }])
     .toArray();
 
