@@ -36,7 +36,7 @@ export default function TierSelector({ active, autoplaying, duration, onSelect }
                   style={bar}
                 />
               </span>
-              <span className="font-mono text-[11px] text-ink-soft">{t.num}</span>
+              <span className="font-mono text-[13px] text-ink-soft">{t.num}</span>
               <span className="mt-1 block text-[15px] font-semibold text-ink-soft transition-colors group-hover:text-ink group-aria-pressed:text-ink sm:text-base">
                 {t.name}
               </span>

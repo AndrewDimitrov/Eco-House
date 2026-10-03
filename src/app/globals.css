@@ -39,6 +39,21 @@ body {
   border-radius: 4px;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+/* Anchors land below the 80px nav instead of under it. */
+[id] {
+  scroll-margin-top: 6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 /* The game's pixel font must not be anti-aliased or it loses its edges. */
 .font-pixel {
   -webkit-font-smoothing: none;

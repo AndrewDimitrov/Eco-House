@@ -6,7 +6,7 @@ export default function SponsorRow() {
     <section aria-labelledby="aff-title">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-[.18em] text-ink-soft">
+          <p className="font-mono text-[13px] uppercase tracking-[.18em] text-ink-soft">
             For your real home
           </p>
           <h2 id="aff-title" className="mt-2 text-2xl font-semibold tracking-tight text-ink">
@@ -14,7 +14,7 @@ export default function SponsorRow() {
           </h2>
         </div>
         {/* These are examples, not partnerships. Keep this honest until one exists. */}
-        <p className="font-mono text-[11px] text-ink-soft">
+        <p className="font-mono text-[13px] text-ink-soft">
           Examples only · no affiliate deals or partnerships
         </p>
       </div>

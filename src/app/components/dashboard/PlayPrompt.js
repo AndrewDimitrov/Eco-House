@@ -27,7 +27,7 @@ export default function PlayPrompt() {
           className="mt-6 inline-flex items-center gap-2 rounded-lg bg-ink px-5 py-3 font-medium text-paper transition-colors hover:bg-ink/85"
         >
           Try the game
-          <span className="rounded bg-paper/15 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider">
+          <span className="rounded bg-paper/15 px-1.5 py-0.5 font-mono text-[12px] uppercase tracking-wider">
             Soon
           </span>
         </Link>

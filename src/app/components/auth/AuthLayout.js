@@ -22,7 +22,7 @@ export default function AuthLayout({ children }) {
         </Link>
         <Link
           href="/"
-          className="font-mono text-[11px] uppercase tracking-[.18em] text-ink-soft transition-colors hover:text-ink"
+          className="font-mono text-[13px] uppercase tracking-[.18em] text-ink-soft transition-colors hover:text-ink"
         >
           ← Back to site
         </Link>

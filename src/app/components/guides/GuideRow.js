@@ -1,5 +1,5 @@
 import Link from "next/link";
-import PixelIcon from "@/app/components/ui/PixelIcon";
+import Icon from "@/app/components/ui/Icon";
 
 // Large row used on the /learn index.
 export default function GuideRow({ guide, index }) {
@@ -14,8 +14,8 @@ export default function GuideRow({ guide, index }) {
         </span>
         <span>
           <span className="flex items-center gap-3">
-            <PixelIcon name={guide.icon} className="h-5 w-5 text-brand" />
-            <span className="font-mono text-[11px] uppercase tracking-[.16em] text-ink-soft">
+            <Icon name={guide.icon} className="h-5 w-5 text-brand" />
+            <span className="font-mono text-[13px] uppercase tracking-[.16em] text-ink-soft">
               {guide.readTime} read
             </span>
           </span>

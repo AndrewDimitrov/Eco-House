@@ -24,7 +24,7 @@ export default function AuthField({
           <button
             type="button"
             onClick={() => setShow((s) => !s)}
-            className="font-mono text-[11px] uppercase tracking-wider text-ink-soft transition-colors hover:text-ink"
+            className="font-mono text-[13px] uppercase tracking-wider text-ink-soft transition-colors hover:text-ink"
           >
             {show ? "Hide" : "Show"}
           </button>

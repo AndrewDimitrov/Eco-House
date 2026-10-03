@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ARTICLES, getArticle } from "@/lib/articles";
 import SiteNav from "@/app/components/SiteNav";
-import PixelIcon from "@/app/components/ui/PixelIcon";
+import Icon from "@/app/components/ui/Icon";
 
 export function generateStaticParams() {
   return ARTICLES.map((a) => ({ slug: a.slug }));
@@ -37,13 +37,13 @@ export default async function ArticlePage({ params }) {
         <div className="relative mx-auto max-w-[760px] px-5 pt-14 pb-14 sm:px-8 sm:pt-20">
           <Link
             href="/learn"
-            className="font-mono text-[11px] uppercase tracking-[.18em] text-ink-soft transition-colors hover:text-ink"
+            className="font-mono text-[13px] uppercase tracking-[.18em] text-ink-soft transition-colors hover:text-ink"
           >
             ← Blog
           </Link>
 
-          <p className="mt-8 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.16em] text-ink-soft">
-            <PixelIcon name={article.icon} className="h-4 w-4 text-brand" />
+          <p className="mt-8 flex items-center gap-3 font-mono text-[13px] uppercase tracking-[.16em] text-ink-soft">
+            <Icon name={article.icon} className="h-4 w-4 text-brand" />
             Guide {String(index + 1).padStart(2, "0")} · {article.readTime} read
           </p>
 
@@ -66,7 +66,7 @@ export default async function ArticlePage({ params }) {
 
         {article.inGame && (
           <aside className="mt-12 rounded-xl border border-line bg-band p-6">
-            <p className="font-mono text-[11px] uppercase tracking-[.16em] text-brand">In the game</p>
+            <p className="font-mono text-[13px] uppercase tracking-[.16em] text-brand">In the game</p>
             <p className="mt-2 text-ink">{article.inGame}</p>
           </aside>
         )}
@@ -76,7 +76,7 @@ export default async function ArticlePage({ params }) {
           className="group mt-10 flex items-center justify-between gap-6 border-t border-line pt-6"
         >
           <span>
-            <span className="font-mono text-[11px] uppercase tracking-[.16em] text-ink-soft">
+            <span className="font-mono text-[13px] uppercase tracking-[.16em] text-ink-soft">
               Next guide
             </span>
             <span className="mt-1 block text-lg font-semibold tracking-tight text-ink transition-colors group-hover:text-brand">

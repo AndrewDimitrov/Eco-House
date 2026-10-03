@@ -13,7 +13,7 @@ export default function StatFigures({ stats, muted }) {
     <dl className="mt-14 grid divide-y divide-line border-y border-line sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:py-6">
       {items.map((it) => (
         <div key={it.label} className="py-6 sm:px-8 sm:py-2 sm:first:pl-0">
-          <dt className="font-mono text-[11px] uppercase tracking-[.16em] text-ink-soft">
+          <dt className="font-mono text-[13px] uppercase tracking-[.16em] text-ink-soft">
             {it.label}
           </dt>
           <dd className="mt-3 flex items-baseline gap-2">

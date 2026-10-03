@@ -1,4 +1,4 @@
-import PixelIcon from "@/app/components/ui/PixelIcon";
+import Icon from "@/app/components/ui/Icon";
 
 export default function CauseRow({ n, icon, title, figure, figureLabel, text, game }) {
   return (
@@ -8,7 +8,7 @@ export default function CauseRow({ n, icon, title, figure, figureLabel, text, ga
       </span>
       <div>
         <h3 className="flex items-center gap-2.5 text-xl font-semibold tracking-tight text-ink">
-          <PixelIcon name={icon} className="h-5 w-5 text-ink-soft" />
+          <Icon name={icon} className="h-5 w-5 text-ink-soft" />
           {title}
         </h3>
         <p className="mt-2 max-w-[54ch] leading-relaxed text-ink-soft">{text}</p>
@@ -18,7 +18,7 @@ export default function CauseRow({ n, icon, title, figure, figureLabel, text, ga
       </div>
       <div className="col-start-2 mt-4 sm:col-start-3 sm:mt-0 sm:text-right">
         <p className="font-pixel text-[32px] leading-none text-ink">{figure}</p>
-        <p className="mt-2 font-mono text-[11px] uppercase tracking-[.14em] text-ink-soft">
+        <p className="mt-2 font-mono text-[13px] uppercase tracking-[.14em] text-ink-soft">
           {figureLabel}
         </p>
       </div>

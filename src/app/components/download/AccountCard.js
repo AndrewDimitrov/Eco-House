@@ -6,7 +6,7 @@ export default function AccountCard({ signedIn }) {
   if (signedIn) {
     return (
       <div className="mt-10 rounded-xl border border-line bg-paper p-6 sm:p-8">
-        <p className="font-mono text-[11px] uppercase tracking-[.16em] text-brand">
+        <p className="font-mono text-[13px] uppercase tracking-[.16em] text-brand">
           You&apos;re all set
         </p>
         <p className="mt-3 text-xl font-semibold tracking-tight text-ink">
@@ -21,7 +21,7 @@ export default function AccountCard({ signedIn }) {
 
   return (
     <div className="mt-10 rounded-xl border border-ink/80 bg-paper p-6 sm:p-8">
-      <p className="font-mono text-[11px] uppercase tracking-[.16em] text-brand">
+      <p className="font-mono text-[13px] uppercase tracking-[.16em] text-brand">
         What you can do now
       </p>
       <p className="mt-3 text-xl font-semibold tracking-tight text-ink">Create your account.</p>

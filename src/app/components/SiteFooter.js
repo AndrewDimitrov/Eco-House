@@ -40,7 +40,7 @@ export default function SiteFooter() {
               style={{ imageRendering: "pixelated" }}
             />
           </Link>
-          <p className="mt-5 max-w-[34ch] text-[15px] leading-relaxed text-ink-soft">
+          <p className="mt-5 max-w-[34ch] text-base leading-relaxed text-ink-soft">
             An idle game about cutting a home&apos;s energy bill to nothing, and a few honest
             guides to doing it for real.
           </p>
@@ -48,7 +48,7 @@ export default function SiteFooter() {
 
         {COLUMNS.map((col) => (
           <nav key={col.title} aria-label={col.title}>
-            <p className="font-mono text-[11px] uppercase tracking-[.16em] text-ink">
+            <p className="font-mono text-[13px] uppercase tracking-[.16em] text-ink">
               {col.title}
             </p>
             <ul className="mt-4 space-y-2.5 text-[15px]">

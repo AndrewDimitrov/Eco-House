@@ -1,18 +1,18 @@
-import PixelIcon from "@/app/components/ui/PixelIcon";
+import Icon from "@/app/components/ui/Icon";
 
 const fmt = (n) => n.toLocaleString("en-US");
 
 function Stat({ icon, label, value, unit, note }) {
   return (
     <div className="py-6 sm:px-7 sm:first:pl-0">
-      <dt className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[.16em] text-ink-soft">
-        <PixelIcon name={icon} className="h-3.5 w-3.5 text-brand" />
+      <dt className="flex items-center gap-2 font-mono text-[13px] uppercase tracking-[.16em] text-ink-soft">
+        <Icon name={icon} className="h-4 w-4 text-brand" />
         {label}
       </dt>
       <dd className="mt-3">
-        <span className="font-pixel text-[36px] leading-none text-ink">{value}</span>
-        {unit && <span className="ml-2 font-mono text-xs text-ink-soft">{unit}</span>}
-        {note && <p className="mt-2 text-[13px] text-ink-soft">{note}</p>}
+        <span className="font-pixel text-[40px] leading-none text-ink">{value}</span>
+        {unit && <span className="ml-2 font-mono text-sm text-ink-soft">{unit}</span>}
+        {note && <p className="mt-2 text-[15px] text-ink-soft">{note}</p>}
       </dd>
     </div>
   );
@@ -48,7 +48,7 @@ export default function ProgressStats({ stats, rank, totalPlayers }) {
       </dl>
 
       {synced && (
-        <p className="mt-3 font-mono text-[11px] text-ink-soft">
+        <p className="mt-3 font-mono text-[13px] text-ink-soft">
           <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-brand align-middle" />
           Last synced from the game · {synced}
         </p>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import PixelIcon from "@/app/components/ui/PixelIcon";
+import Icon from "@/app/components/ui/Icon";
 
 export default function BlogBanner({ guide }) {
   return (
@@ -11,10 +11,10 @@ export default function BlogBanner({ guide }) {
 
       <div className="relative grid gap-6 sm:grid-cols-[auto_1fr_auto] sm:items-center">
         <span className="flex h-14 w-14 items-center justify-center rounded-lg bg-paper/10 text-[#9fe0b8]">
-          <PixelIcon name={guide.icon} className="h-8 w-8" />
+          <Icon name={guide.icon} className="h-8 w-8" strokeWidth={1.5} />
         </span>
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-[.16em] text-paper/60">
+          <p className="font-mono text-[13px] uppercase tracking-[.16em] text-paper/60">
             From the blog · {guide.readTime} read
           </p>
           <p className="mt-2 text-xl font-semibold leading-snug tracking-tight sm:text-2xl">

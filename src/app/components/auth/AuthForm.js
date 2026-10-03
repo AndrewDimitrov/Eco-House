@@ -10,7 +10,7 @@ export default function AuthForm({ mode, action }) {
 
   return (
     <>
-      <p className="font-mono text-[11px] uppercase tracking-[.18em] text-ink-soft">
+      <p className="font-mono text-[13px] uppercase tracking-[.18em] text-ink-soft">
         {isSignUp ? "Join the board" : "Welcome back"}
       </p>
       <h1 className="mt-2 text-[28px] font-semibold leading-tight tracking-[-.03em] text-ink">

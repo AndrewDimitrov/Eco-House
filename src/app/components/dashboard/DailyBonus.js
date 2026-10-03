@@ -12,7 +12,7 @@ export default function DailyBonus({ streak, claimedToday }) {
 
   return (
     <div className="flex h-full flex-col rounded-xl border border-line bg-paper p-6">
-      <p className="font-mono text-[11px] uppercase tracking-[.16em] text-ink-soft">Daily bonus</p>
+      <p className="font-mono text-[13px] uppercase tracking-[.16em] text-ink-soft">Daily bonus</p>
       <p className="mt-2 text-xl font-semibold tracking-tight text-ink">
         {currentStreak}-day streak
       </p>

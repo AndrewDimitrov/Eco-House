@@ -17,7 +17,7 @@ export default function WasteBar({ wastedPct }) {
           style={{ width: `${used}%` }}
         >
           <span className="font-pixel text-sm leading-none text-ink">{used}</span>
-          <span className="mt-1 font-mono text-[10px] uppercase tracking-[.12em] text-ink-soft">
+          <span className="mt-1 font-mono text-[12px] uppercase tracking-[.12em] text-ink-soft">
             Does something
           </span>
         </div>
@@ -26,13 +26,13 @@ export default function WasteBar({ wastedPct }) {
           style={{ width: `${wastedPct}%` }}
         >
           <span className="font-pixel text-sm leading-none text-ink">{wastedPct}</span>
-          <span className="mt-1 font-mono text-[10px] uppercase tracking-[.12em] text-ink">
+          <span className="mt-1 font-mono text-[12px] uppercase tracking-[.12em] text-ink">
             Wasted
           </span>
         </div>
       </div>
 
-      <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
+      <p className="mt-3 text-base leading-relaxed text-ink-soft">
         Those {wastedPct} units are paid for and do nothing — they leak out as standby draw, heat
         through the walls, and light that costs five times what it should.
       </p>
