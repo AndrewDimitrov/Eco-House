@@ -1,4 +1,5 @@
 import { ARTICLES } from "@/lib/articles";
+import SiteNav from "@/app/components/SiteNav";
 import Kicker from "@/app/components/ui/Kicker";
 import Accent from "@/app/components/ui/Accent";
 import GuideRow from "@/app/components/guides/GuideRow";
@@ -12,7 +13,8 @@ export const metadata = {
 export default function LearnPage() {
   return (
     <main className="flex-1">
-      <section className="border-t border-line pt-32 pb-24 sm:pt-40 sm:pb-32">
+      <SiteNav />
+      <section className="pt-20 pb-24 sm:pt-24 sm:pb-32">
         <div className="mx-auto max-w-[1320px] px-5 sm:px-8">
           <Kicker>Guides</Kicker>
           <h1 className="mt-5 max-w-[18ch] text-[34px] font-semibold leading-[1.02] tracking-[-.03em] text-ink sm:text-[48px]">

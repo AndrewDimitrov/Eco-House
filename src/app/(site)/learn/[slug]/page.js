@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ARTICLES, getArticle } from "@/lib/articles";
+import SiteNav from "@/app/components/SiteNav";
+import PixelIcon from "@/app/components/ui/PixelIcon";
 
 export function generateStaticParams() {
   return ARTICLES.map((a) => ({ slug: a.slug }));
@@ -23,44 +25,68 @@ export default async function ArticlePage({ params }) {
   if (!article) notFound();
 
   const index = ARTICLES.findIndex((a) => a.slug === slug);
-  const next = ARTICLES[index + 1];
+  // Wraps, so the last guide still offers somewhere to go.
+  const next = ARTICLES[(index + 1) % ARTICLES.length];
 
   return (
-    <main className="flex-1 px-6 py-12">
-      <article className="mx-auto max-w-2xl">
-        <Link href="/learn" className="text-sm text-ink-soft transition hover:text-ink-soft">
-          ← All articles
-        </Link>
+    <main>
+      <SiteNav />
 
-        <h1 className="mt-4 text-3xl font-bold tracking-tight">{article.title}</h1>
-        <p className="mt-1 text-sm text-ink-soft">{article.readTime} read</p>
-        <p className="mt-4 text-lg leading-relaxed text-ink-soft">{article.summary}</p>
+      <header className="relative overflow-hidden border-b border-line bg-linear-to-b from-sky to-paper">
+        <div className="grain pointer-events-none absolute inset-0" />
+        <div className="relative mx-auto max-w-[760px] px-5 pt-14 pb-14 sm:px-8 sm:pt-20">
+          <Link
+            href="/learn"
+            className="font-mono text-[11px] uppercase tracking-[.18em] text-ink-soft transition-colors hover:text-ink"
+          >
+            ← Blog
+          </Link>
 
-        <div className="mt-10 space-y-8">
+          <p className="mt-8 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[.16em] text-ink-soft">
+            <PixelIcon name={article.icon} className="h-4 w-4 text-brand" />
+            Guide {String(index + 1).padStart(2, "0")} · {article.readTime} read
+          </p>
+
+          <h1 className="mt-4 text-[38px] font-semibold leading-[1.02] tracking-[-.03em] text-ink sm:text-[54px]">
+            {article.title}
+          </h1>
+          <p className="mt-5 text-xl leading-relaxed text-ink-soft">{article.summary}</p>
+        </div>
+      </header>
+
+      <article className="mx-auto max-w-[760px] px-5 py-14 sm:px-8 sm:py-20">
+        <div className="space-y-6 text-[18px] leading-[1.75] text-ink/90">
           {article.sections.map((s) => (
             <section key={s.heading}>
-              <h2 className="font-semibold text-brand">{s.heading}</h2>
-              <p className="mt-2 leading-relaxed text-ink-soft">{s.body}</p>
+              <h2 className="pt-6 text-2xl font-semibold tracking-tight text-ink">{s.heading}</h2>
+              <p className="mt-3">{s.body}</p>
             </section>
           ))}
         </div>
 
         {article.inGame && (
-          <p className="mt-10 rounded-xl border border-line bg-paper p-4 text-sm text-ink-soft">
-            <span className="font-medium text-ink">In the game: </span>
-            {article.inGame}
-          </p>
+          <aside className="mt-12 rounded-xl border border-line bg-band p-6">
+            <p className="font-mono text-[11px] uppercase tracking-[.16em] text-brand">In the game</p>
+            <p className="mt-2 text-ink">{article.inGame}</p>
+          </aside>
         )}
 
-        {next && (
-          <Link
-            href={`/learn/${next.slug}`}
-            className="mt-6 block rounded-xl border border-line p-4 transition hover:border-line"
-          >
-            <p className="text-xs uppercase tracking-wider text-ink-soft">Next</p>
-            <p className="mt-1 font-medium">{next.title}</p>
-          </Link>
-        )}
+        <Link
+          href={`/learn/${next.slug}`}
+          className="group mt-10 flex items-center justify-between gap-6 border-t border-line pt-6"
+        >
+          <span>
+            <span className="font-mono text-[11px] uppercase tracking-[.16em] text-ink-soft">
+              Next guide
+            </span>
+            <span className="mt-1 block text-lg font-semibold tracking-tight text-ink transition-colors group-hover:text-brand">
+              {next.title}
+            </span>
+          </span>
+          <span className="transition-transform group-hover:translate-x-1" aria-hidden="true">
+            →
+          </span>
+        </Link>
       </article>
     </main>
   );

@@ -1,4 +1,5 @@
 import { getSession } from "@/lib/session";
+import SiteNav from "@/app/components/SiteNav";
 import Hero from "@/app/components/hero/Hero";
 import Leaderboard from "@/app/components/leaderboard/Leaderboard";
 import EnergySection from "@/app/components/learn/EnergySection";
@@ -12,6 +13,7 @@ export default async function Home() {
 
   return (
     <main className="flex-1">
+      <SiteNav floating />
       <Hero />
       <Leaderboard />
 

@@ -1,10 +1,14 @@
 import Link from "next/link";
 
-// Absolute so it floats over the hero's sky. Pages without a hero get the same
-// bar on paper, which still reads correctly.
-export default function SiteNav() {
+// `floating` lets it sit over the hero's sky on the landing page. Everywhere
+// else it's a normal bar in the flow, or it would cover the content.
+export default function SiteNav({ floating = false }) {
   return (
-    <header className="absolute inset-x-0 top-0 z-20">
+    <header
+      className={
+        floating ? "absolute inset-x-0 top-0 z-20" : "relative border-b border-line bg-paper"
+      }
+    >
       {/* Width and padding track the hero's container so the logo lines up
           with the headline. */}
       <div className="mx-auto flex h-20 max-w-[1480px] items-center justify-between px-4 sm:px-6 lg:px-8">

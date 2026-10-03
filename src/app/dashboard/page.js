@@ -1,163 +1,59 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/session";
 import { getBonusState } from "@/lib/bonus";
 import { getPlayerStats, getPlayerRank } from "@/lib/stats";
-import { impactFromKwh } from "@/lib/leaderboard";
-import { SPONSORS } from "@/lib/sponsors";
+import { getTotalSaved } from "@/lib/leaderboard";
 import { ARTICLES } from "@/lib/articles";
-import { logOutAction } from "@/app/actions/auth";
-import BonusCard from "@/app/components/BonusCard";
+import SponsorRow from "@/app/components/dashboard/SponsorRow";
+import ProgressStats from "@/app/components/dashboard/ProgressStats";
+import PlayPrompt from "@/app/components/dashboard/PlayPrompt";
+import DailyBonus from "@/app/components/dashboard/DailyBonus";
+import BlogBanner from "@/app/components/dashboard/BlogBanner";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = { title: "Your house · Eco-House" };
-
-function fmt(n, digits = 0) {
-  return n.toLocaleString("en-GB", { maximumFractionDigits: digits });
-}
+export const metadata = { title: "Dashboard · Eco-House" };
 
 export default async function DashboardPage() {
   const session = await getSession();
   if (!session) redirect("/login");
 
-  const [bonus, stats, rank] = await Promise.all([
+  const [bonus, stats, rank, totals] = await Promise.all([
     getBonusState(session.username),
     getPlayerStats(session.username),
     getPlayerRank(session.username),
+    getTotalSaved(),
   ]);
 
-  const impact = impactFromKwh(stats.kwhSaved);
-  const neverSynced = !stats.lastSync;
-
-  const STATS = [
-    { label: "Energy saved", value: fmt(stats.kwhSaved), unit: "kWh" },
-    { label: "Coins", value: fmt(stats.coins), unit: "" },
-    { label: "Eco points", value: fmt(stats.ecoPoints), unit: "" },
-    { label: "Rank", value: rank ? `#${rank}` : "—", unit: "" },
-    { label: "Upgrades", value: fmt(stats.upgradesOwned), unit: "owned" },
-    { label: "Houses", value: fmt(stats.housesCompleted), unit: "completed" },
-    { label: "Tier", value: stats.tier, unit: "" },
-  ];
+  // No sync yet means there's nothing to show but an invitation to play.
+  const hasPlayed = Boolean(stats.lastSync);
 
   return (
-    <main className="flex-1">
-      {/* Banner — the only thing at the top, links out to the public site */}
-      <div className="border-b border-line bg-brand/5">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-6 py-3 text-sm">
-          <p className="text-ink-soft">
-            Want to cut your real bill?{" "}
-            <Link href="/learn" className="font-medium text-brand hover:underline">
-              Read the energy guides →
-            </Link>
-          </p>
-          <form action={logOutAction}>
-            <button
-              type="submit"
-              className="text-ink-soft transition hover:text-ink-soft"
-            >
-              Log out
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-5xl px-6 py-10">
-        <h1 className="text-3xl font-bold tracking-tight">
-          Welcome back, {session.username}
+    <main className="mx-auto max-w-[1320px] space-y-16 px-5 py-12 sm:px-8 sm:py-16">
+      <header>
+        <p className="font-mono text-[11px] uppercase tracking-[.18em] text-ink-soft">Dashboard</p>
+        <h1 className="mt-3 text-[34px] font-semibold leading-tight tracking-[-.03em] text-ink sm:text-[44px]">
+          Hi, {session.username}.
         </h1>
-        <p className="mt-1.5 text-ink-soft">
-          {neverSynced
-            ? "Your stats fill in once the game syncs your save."
-            : `Last synced ${new Date(stats.lastSync).toLocaleDateString("en-GB")}.`}
-        </p>
+      </header>
 
-        {/* Stats cards */}
-        <section className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
-          {STATS.map((s) => (
-            <div
-              key={s.label}
-              className="rounded-2xl border border-line bg-paper p-5"
-            >
-              <p className="text-xs uppercase tracking-wider text-ink-soft">{s.label}</p>
-              <p className="mt-2 text-3xl font-bold text-brand">{s.value}</p>
-              {s.unit && <p className="mt-0.5 text-xs text-ink-soft">{s.unit}</p>}
-            </div>
-          ))}
-        </section>
+      <SponsorRow />
 
-        {stats.kwhSaved > 0 && (
-          <p className="mt-4 text-sm text-ink-soft">
-            That is roughly <span className="text-ink">{fmt(impact.co2Kg)} kg</span> of
-            CO₂ avoided — about {fmt(impact.trees, 1)} trees working for a year.
-          </p>
-        )}
+      <section aria-labelledby="prog-title">
+        <h2 id="prog-title" className="text-2xl font-semibold tracking-tight text-ink">
+          Your game
+        </h2>
+        <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
+          {hasPlayed ? (
+            <ProgressStats stats={stats} rank={rank} totalPlayers={totals.players} />
+          ) : (
+            <PlayPrompt />
+          )}
+          <DailyBonus streak={bonus.streak} claimedToday={bonus.claimedToday} />
+        </div>
+      </section>
 
-        {/* Daily coins */}
-        <section className="mt-8">
-          <BonusCard streak={bonus.streak} claimedToday={bonus.claimedToday} />
-        </section>
-
-        {/* Promo cards */}
-        <section className="mt-12">
-          <h2 className="text-xl font-bold tracking-tight">Cut your real bill</h2>
-          <p className="mt-1 text-sm text-ink-soft">
-            The real-world versions of the upgrades in the game.
-          </p>
-
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {SPONSORS.map((s) => (
-              <div
-                key={s.name}
-                className="flex flex-col rounded-2xl border border-line bg-paper p-5 transition hover:border-line"
-              >
-                <span className="self-start rounded-full bg-line px-2.5 py-1 text-xs text-ink-soft">
-                  {s.category}
-                </span>
-                <p className="mt-3 font-semibold">{s.name}</p>
-                <p className="mt-1.5 flex-1 text-sm leading-relaxed text-ink-soft">
-                  {s.blurb}
-                </p>
-                <p className="mt-4 border-t border-line pt-3 text-sm font-medium text-brand">
-                  {s.saving}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <p className="mt-4 text-xs text-ink-soft">
-            Listed as examples of what works. Eco-House is not affiliated with these brands and
-            earns nothing from them. If that changes, it will say so here.
-          </p>
-        </section>
-
-        {/* Learn cards */}
-        <section className="mt-12">
-          <div className="flex items-baseline justify-between">
-            <h2 className="text-xl font-bold tracking-tight">Read up</h2>
-            <Link href="/learn" className="text-sm text-brand hover:underline">
-              All articles
-            </Link>
-          </div>
-
-          <div className="mt-5 grid gap-4 sm:grid-cols-2">
-            {ARTICLES.map((a) => (
-              <Link
-                key={a.slug}
-                href={`/learn/${a.slug}`}
-                className="flex flex-col rounded-2xl border border-line bg-paper p-5 transition hover:border-line"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <p className="font-semibold">{a.title}</p>
-                  <span className="shrink-0 text-xs text-ink-soft">{a.readTime}</span>
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-ink-soft">{a.summary}</p>
-                <span className="mt-4 text-sm font-medium text-brand">Read →</span>
-              </Link>
-            ))}
-          </div>
-        </section>
-      </div>
+      <BlogBanner guide={ARTICLES[1]} />
     </main>
   );
 }
