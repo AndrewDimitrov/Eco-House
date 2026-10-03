@@ -33,6 +33,7 @@ export default async function DashboardPage() {
   const STATS = [
     { label: "Energy saved", value: fmt(stats.kwhSaved), unit: "kWh" },
     { label: "Coins", value: fmt(stats.coins), unit: "" },
+    { label: "Eco points", value: fmt(stats.ecoPoints), unit: "" },
     { label: "Rank", value: rank ? `#${rank}` : "—", unit: "" },
     { label: "Upgrades", value: fmt(stats.upgradesOwned), unit: "owned" },
     { label: "Houses", value: fmt(stats.housesCompleted), unit: "completed" },
