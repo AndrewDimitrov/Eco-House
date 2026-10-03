@@ -4,6 +4,7 @@ import { getBonusState } from "@/lib/bonus";
 import { getPlayerStats, getPlayerRank } from "@/lib/stats";
 import { getTotalSaved } from "@/lib/leaderboard";
 import { ARTICLES } from "@/lib/articles";
+import { ECO_POINTS_PER_POST } from "@/lib/claims";
 import SponsorRow from "@/app/components/dashboard/SponsorRow";
 import ProgressStats from "@/app/components/dashboard/ProgressStats";
 import PlayPrompt from "@/app/components/dashboard/PlayPrompt";
@@ -53,7 +54,7 @@ export default async function DashboardPage() {
         </div>
       </section>
 
-      <BlogBanner guide={ARTICLES[1]} />
+      <BlogBanner guide={ARTICLES[1]} points={ECO_POINTS_PER_POST} />
     </main>
   );
 }

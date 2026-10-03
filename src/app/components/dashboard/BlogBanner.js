@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Icon from "@/app/components/ui/Icon";
 
-export default function BlogBanner({ guide }) {
+export default function BlogBanner({ guide, points }) {
   return (
     <Link
       href={`/learn/${guide.slug}`}
@@ -22,7 +22,7 @@ export default function BlogBanner({ guide }) {
           </p>
         </div>
         <span className="inline-flex items-center gap-3 justify-self-start rounded-lg bg-paper px-5 py-3 font-medium text-ink sm:justify-self-end">
-          Read it
+          Read &amp; earn <span className="font-pixel text-brand">+{points}</span>
           <span className="transition-transform group-hover:translate-x-1" aria-hidden="true">
             →
           </span>

@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ARTICLES, getArticle } from "@/lib/articles";
+import { getSession } from "@/lib/session";
+import { hasClaimed, ECO_POINTS_PER_POST } from "@/lib/claims";
 import SiteNav from "@/app/components/SiteNav";
 import Icon from "@/app/components/ui/Icon";
+import ClaimEcoPoints from "@/app/components/blog/ClaimEcoPoints";
+
+// Reads the session to show claim state, so it can't be prerendered.
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   return ARTICLES.map((a) => ({ slug: a.slug }));
@@ -27,6 +33,9 @@ export default async function ArticlePage({ params }) {
   const index = ARTICLES.findIndex((a) => a.slug === slug);
   // Wraps, so the last guide still offers somewhere to go.
   const next = ARTICLES[(index + 1) % ARTICLES.length];
+
+  const session = await getSession();
+  const claimed = session ? await hasClaimed(session.username, slug) : false;
 
   return (
     <main>
@@ -70,6 +79,15 @@ export default async function ArticlePage({ params }) {
             <p className="mt-2 text-ink">{article.inGame}</p>
           </aside>
         )}
+
+        <div className="mt-16">
+          <ClaimEcoPoints
+            slug={slug}
+            points={ECO_POINTS_PER_POST}
+            signedIn={Boolean(session)}
+            alreadyClaimed={claimed}
+          />
+        </div>
 
         <Link
           href={`/learn/${next.slug}`}
